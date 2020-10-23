@@ -1,0 +1,9 @@
+2020/10/16 11:32:19 C:/Users/luoqi/PycharmProjects/WEBUI/utils/log_config.py-log_config.py-__init__ test
+2020/10/16 11:32:41 log_config.py-__init__ test
+2020/10/16 11:32:58 log_config.py __init__ test
+2020/10/16 13:28:37 log_config.py __init__ test
+2020/10/16 13:28:37 log_config.py <module> ssss
+2020/10/16 13:29:21 log_config.py __init__ test
+2020/10/16 13:29:21 log_config.py <module> ssss
+2020/10/16 13:37:22 log_config.py <module> ssss
+2020/10/16 13:37:36 log_config.py <module> ssstests
