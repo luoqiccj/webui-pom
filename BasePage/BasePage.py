@@ -83,9 +83,9 @@ if __name__ == '__main__':
     driver = bp.open_broswer()
     bp.open_url(driver,"http://www.baidu.com")
     bp.send_text("id","kw","测试")
-    sleep(3)
+    sleep(2)
     element=bp.click_element("id","su")
-    sleep(3)
+    sleep(2)
     bp.close_broswer()
 
 
