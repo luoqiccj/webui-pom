@@ -26,6 +26,13 @@ class RunMain(unittest.TestCase):
         case_name = os.path.basename(__file__).split(".")[0]
         # dir_name = os.path.abspath(os.path.dirname(os.getcwd())) + "\\Report"
         dir_name = os.path.join(os.path.abspath(os.path.dirname(os.getcwd())),"Report",day)
+        log.info("dir_name=%s"%dir_name)
+        file_exist = os.path.exists(dir_name)
+        log.info("file_exist=%s"%file_exist)
+        if not file_exist:
+            os.makedirs(dir_name)
+        else:
+            log.info("dir_name = %s文件夹已存在"%dir_name)
         file_name = "report_" + case_name + "_" + day + "("+ broswer_type + ")" +".html"
         report_name = os.path.join(dir_name, file_name)
         log.info("report_name = %s" % report_name)
