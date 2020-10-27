@@ -69,7 +69,7 @@ class RunMain(unittest.TestCase):
 
 if __name__ == '__main__':
     rm = RunMain()
-    sm = SendMail()
+    # sm = SendMail()
     ts = rm.get_case_suit()
     broswer_type = sys.argv[1]
     log.info("broswer_type=%s"%broswer_type)
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     log.info("success_count=%s" % result.success_count)
     log.info("failure_count=%s" % result.failure_count)
     log.info("error_count=%s" % result.error_count)
-    sm.send_mail(report_name,result.success_count,result.failure_count)
-    sm.close_mail()
+    # sm.send_mail(report_name,result.success_count,result.failure_count)
+    # sm.close_mail()
     fp.close()
 
