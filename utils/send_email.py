@@ -1,4 +1,9 @@
 #coding=utf-8
+import sys
+import os
+curPath = os.path.abspath(os.path.dirname(__file__))
+rootPath = os.path.split(curPath)[0]
+sys.path.append(rootPath)
 
 import smtplib
 from email.mime.text import MIMEText
@@ -9,7 +14,6 @@ from utils.get_info import log
 from  utils.get_info import get_project_dir
 from  utils.get_info import get_cur_date
 import glob
-import os
 
 class SendMail:
     def __init__(self):

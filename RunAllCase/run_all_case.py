@@ -24,7 +24,8 @@ class RunMain(unittest.TestCase):
         broswer_type = sys.argv[1]
         day = datetime.now().strftime("%Y%m%d")
         case_name = os.path.basename(__file__).split(".")[0]
-        dir_name = os.path.abspath(os.path.dirname(os.getcwd())) + "\\Report"
+        # dir_name = os.path.abspath(os.path.dirname(os.getcwd())) + "\\Report"
+        dir_name = os.path.join(os.path.abspath(os.path.dirname(os.getcwd())),"Report",day)
         file_name = "report_" + case_name + "_" + day + "("+ broswer_type + ")" +".html"
         report_name = os.path.join(dir_name, file_name)
         log.info("report_name = %s" % report_name)
