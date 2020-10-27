@@ -14,6 +14,7 @@ from utils.get_info import log
 from  utils.get_info import get_project_dir
 from  utils.get_info import get_cur_date
 import glob
+# import utils.global_para as glo
 
 class SendMail:
     def __init__(self):
@@ -75,18 +76,41 @@ class SendMail:
         file_num = len(glob.glob(mail_dir+"\\"+"*.html"))
         log.info("file_num=%s"%(file_num))
 
+        # ie = glo.get_value("ie")
+        # chrome = glo.get_value("chrome")
+        # ff = glo.get_value("firefox")
+        # log.info("ie=%s,chrome=%s,ff=%s"%(ie,chrome,ff))
+        # broswer=[]
+        # if ie != None:
+        #     broswer.append("ie")
+        #     success_count = glo.get_value("ie_success_count")
+        #     failure_count = glo.get_value("ie_failure_count")
+        # elif chrome != None:
+        #     broswer.append("chrome")
+        #     success_count = glo.get_value("ch_success_count")
+        #     failure_count = glo.get_value("ch_failure_count")
+        # elif ff != None:
+        #     broswer.append("firefox")
+        #     success_count = glo.get_value("ff_success_count")
+        #     failure_count = glo.get_value("ff_failure_count")
+        # # total_case_count =
         #邮件正文内容
-        context = "共测试%s个浏览器"%file_num
-        message.attach(MIMEText(context))
+        # context = "共测试%s个浏览器(%s)。每个浏览器测试%s个用例，其中成功%s个，失败%s个"%(file_num,broswer,(success_count + failure_count),success_count,failure_count)
 
         # file_2 = os.walk(mail_dir)[2]
         # log.info("file_2=%s" % file_2)
+        broswer_type =[]
         for root, dirs, file in os.walk(mail_dir):
             #构造附件
             log.info("file=%s"%file)
+
             for mail_file in file:
                 log.info("mail_file=%s" % mail_file)
+                bt = mail_file.split("(")[1].split(")")[0]
+                broswer_type.append(bt)
+                log.info("broswer_type=%s"%(broswer_type))
                 mail_path = os.path.join(mail_dir, mail_file)
+
                 if os.path.isfile(mail_path):
                     att = MIMEText(open(mail_path,"rb").read(),"base64","utf-8")
                     send_file_name = mail_file
@@ -94,6 +118,8 @@ class SendMail:
                     att["Content-Type"] = 'application/octet-stream'
                     att["Content-Disposition"] = 'attachment; filename="%s"'%send_file_name
                     message.attach(att)
+        context = "共测试%s个浏览器(%s)。" % (len(broswer_type),broswer_type)
+        message.attach(MIMEText(context))
 
         try:
             self.st = smtplib.SMTP()

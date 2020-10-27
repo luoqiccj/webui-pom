@@ -10,6 +10,8 @@ from utils.HTMLTestRunner import HTMLTestRunner
 from datetime import datetime
 from utils.get_info import log
 from utils.send_email import SendMail
+# import utils.global_para as glo
+# glo._init()
 
 class RunMain(unittest.TestCase):
     #获取所有测试用例
@@ -84,12 +86,26 @@ if __name__ == '__main__':
     report_name = rm.set_report_name()
     # 打开report.html文件
     fp = open(report_name, "wb")
-    runner = HTMLTestRunner(fp)
+    runner = HTMLTestRunner(fp,title="WEBUI自动化测试报告")
     result = runner.run(ts)
-    log.info("success_count=%s" % result.success_count)
-    log.info("failure_count=%s" % result.failure_count)
-    log.info("error_count=%s" % result.error_count)
+    fp.close()
+    # if broswer_type =="ie":
+    #     glo.set_value("ie","ie")
+    #     glo.set_value("ie_success_count",result.success_count)
+    #     glo.set_value("ie_failure_count" , result.failure_count)
+    #     glo.set_value("ie_error_count" ,result.error_count)
+    # elif broswer_type =="chrome":
+    #     glo.set_value("chrome", "chrome")
+    #     glo.set_value("ch_success_count", result.success_count)
+    #     glo.set_value("ch_failure_count", result.failure_count)
+    #     glo.set_value("ch_error_count", result.error_count)
+    # elif broswer_type =="firefox":
+    #     glo.set_value("firefox", "firefox")
+    #     glo.set_value("ff_success_count", result.success_count)
+    #     glo.set_value("ff_failure_count", result.failure_count)
+    #     glo.set_value("ff_error_count", result.error_count)
+    # glo.get_value("chrome")
     # sm.send_mail(report_name,result.success_count,result.failure_count)
     # sm.close_mail()
-    fp.close()
+
 

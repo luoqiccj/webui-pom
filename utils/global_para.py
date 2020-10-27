@@ -1,0 +1,19 @@
+#coding=utf-8
+from utils.get_info import log
+
+def _init():
+    global _global_dict
+    _global_dict = {}
+
+def set_value(key,value):
+    """ 定义一个全局变量 """
+    _global_dict[key]=value
+    log.info("key = %s,value=%s"%(key,value))
+
+def get_value(key,defValue=None):
+    """ 获得一个全局变量,不存在则返回默认值 """
+    try:
+        log.info("key = %s,value=%s" % (key, _global_dict[key]))
+        return _global_dict[key]
+    except:
+        KeyError
