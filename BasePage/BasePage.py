@@ -75,7 +75,7 @@ class BasePage:
         dir = get_project_dir() + "\ScreenShot\\"
         #截图文件命名 调用函数+日期.png
         filename = dir + func_name + "_" + get_cur_date() + ".png"
-        log.info("filename=%s" % filename)
+        #log.info("filename=%s" % filename)
         self.driver.save_screenshot(filename)
 
 if __name__ == '__main__':
