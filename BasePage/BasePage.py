@@ -75,7 +75,7 @@ class BasePage:
         dir = get_project_dir() + "\ScreenShot\\"
         #截图文件命名 调用函数+日期.png
         filename = dir + func_name + "_" + get_cur_date() + ".png"
-        #log.info("filename=%s" % filename)
+        log.info("filename=%s" % filename)
         self.driver.save_screenshot(filename)
 
 if __name__ == '__main__':
@@ -83,9 +83,9 @@ if __name__ == '__main__':
     driver = bp.open_broswer()
     bp.open_url(driver,"http://www.baidu.com")
     bp.send_text("id","kw","测试")
-    sleep(4)
+    sleep(3)
     element=bp.click_element("id","su")
-    sleep(4)
+    sleep(3)
     bp.close_broswer()
 
 
