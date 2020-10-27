@@ -80,7 +80,7 @@ class RunMain(unittest.TestCase):
 if __name__ == '__main__':
     rm = RunMain()
     # sm = SendMail()
-    ts = rm.get_case_suit()
+    ts = rm.get_all_testcase()
     broswer_type = sys.argv[1]
     log.info("broswer_type=%s"%broswer_type)
     report_name = rm.set_report_name()

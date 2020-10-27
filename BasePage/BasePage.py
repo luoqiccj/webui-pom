@@ -8,6 +8,8 @@ from utils.get_info import log
 from utils.get_info import get_project_dir
 from utils.get_info import get_cur_date
 import traceback
+import os
+import sys
 
 class BasePage:
     #打开浏览器
@@ -71,10 +73,15 @@ class BasePage:
     def get_screenshot(self):
         #获取调用该函数的函数名
         func_name = traceback.extract_stack()[-2][2]
+        day = get_cur_date()
         #截图文件路径
-        dir = get_project_dir() + "\ScreenShot\\"
+        dir = os.path.join(get_project_dir(),"ScreenShot",day,sys.argv[1])
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        else:
+            log.info("%s 文件夹已存在"%dir)
         #截图文件命名 调用函数+日期.png
-        filename = dir + func_name + "_" + get_cur_date() + ".png"
+        filename = dir + "\\" + func_name + "_" + get_cur_date() + ".png"
         log.info("filename=%s" % filename)
         self.driver.save_screenshot(filename)
 
