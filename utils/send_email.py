@@ -118,7 +118,15 @@ class SendMail:
                     att["Content-Type"] = 'application/octet-stream'
                     att["Content-Disposition"] = 'attachment; filename="%s"'%send_file_name
                     message.attach(att)
-        context = "共测试%s个浏览器(%s)。" % (len(broswer_type),broswer_type)
+
+        if len(broswer_type)==1:
+            context = "共测试%s个浏览器(%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0])
+        elif len(broswer_type)==2:
+            context = "共测试%s个浏览器(%s,%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0],broswer_type[1])
+        elif len(broswer_type)==3:
+            context = "共测试%s个浏览器(%s,%s,%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0],broswer_type[1],broswer_type[2])
+        else:
+            log.info("浏览器个数错误")
         message.attach(MIMEText(context))
 
         try:
@@ -134,6 +142,8 @@ class SendMail:
     #关闭连接
     def close_mail(self):
         self.st.close()
+
+
 
 if __name__ == '__main__':
     sm=SendMail()
