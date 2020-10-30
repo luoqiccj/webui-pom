@@ -76,11 +76,14 @@ class RunMain(unittest.TestCase):
 
         return test_suit
 
-    def run_main(self):
+    def run_main(self,run_case_type=None):
         #获取测试套件
-        ts = self.get_case_suit()
-        broswer_type = sys.argv[1]
-        log.info("broswer_type=%s" % broswer_type)
+        if run_case_type=='2':
+            ts = self.get_case_suit()
+        elif run_case_type =='1' or run_case_type==None:
+            ts = self.get_all_testcase()
+        else:
+            log.info("用例范围参数错误，应该为空，1,2")
         report_name = self.set_report_name()
         # 打开report.html文件
         fp = open(report_name, "wb")
@@ -90,7 +93,13 @@ class RunMain(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    RunMain().run_main()
+    if len(sys.argv) == 3:
+        RunMain().run_main(sys.argv[2])
+    elif len(sys.argv) == 2:
+        RunMain().run_main()
+    else:
+        log.info("参数个数错误")
+
 
 
 
