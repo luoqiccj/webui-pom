@@ -76,36 +76,21 @@ class RunMain(unittest.TestCase):
 
         return test_suit
 
+    def run_main(self):
+        #获取测试套件
+        ts = self.get_case_suit()
+        broswer_type = sys.argv[1]
+        log.info("broswer_type=%s" % broswer_type)
+        report_name = self.set_report_name()
+        # 打开report.html文件
+        fp = open(report_name, "wb")
+        runner = HTMLTestRunner(fp, title="WEBUI自动化测试报告")
+        result = runner.run(ts)
+        fp.close()
+
 
 if __name__ == '__main__':
-    rm = RunMain()
-    # sm = SendMail()
-    ts = rm.get_all_testcase()
-    broswer_type = sys.argv[1]
-    log.info("broswer_type=%s"%broswer_type)
-    report_name = rm.set_report_name()
-    # 打开report.html文件
-    fp = open(report_name, "wb")
-    runner = HTMLTestRunner(fp,title="WEBUI自动化测试报告")
-    result = runner.run(ts)
-    fp.close()
-    # if broswer_type =="ie":
-    #     glo.set_value("ie","ie")
-    #     glo.set_value("ie_success_count",result.success_count)
-    #     glo.set_value("ie_failure_count" , result.failure_count)
-    #     glo.set_value("ie_error_count" ,result.error_count)
-    # elif broswer_type =="chrome":
-    #     glo.set_value("chrome", "chrome")
-    #     glo.set_value("ch_success_count", result.success_count)
-    #     glo.set_value("ch_failure_count", result.failure_count)
-    #     glo.set_value("ch_error_count", result.error_count)
-    # elif broswer_type =="firefox":
-    #     glo.set_value("firefox", "firefox")
-    #     glo.set_value("ff_success_count", result.success_count)
-    #     glo.set_value("ff_failure_count", result.failure_count)
-    #     glo.set_value("ff_error_count", result.error_count)
-    # glo.get_value("chrome")
-    # sm.send_mail(report_name,result.success_count,result.failure_count)
-    # sm.close_mail()
+    RunMain().run_main()
+
 
 
