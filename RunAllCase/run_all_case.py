@@ -9,9 +9,7 @@ import unittest
 from utils.HTMLTestRunner import HTMLTestRunner
 from datetime import datetime
 from utils.get_info import log
-from utils.send_email import SendMail
-# import utils.global_para as glo
-# glo._init()
+import platform
 
 class RunMain(unittest.TestCase):
     #获取所有测试用例
@@ -77,7 +75,11 @@ class RunMain(unittest.TestCase):
         return test_suit
 
     def run_main(self,run_case_type=None):
-        #获取测试套件
+        #系统版本
+        plat = platform.system()
+        plat_ver = platform.version()
+        log.info("plat_ver = %s"%plat_ver)
+        #根据参数 获取测试套件
         if run_case_type=='2':
             ts = self.get_case_suit()
         elif run_case_type =='1' or run_case_type==None:
@@ -87,8 +89,11 @@ class RunMain(unittest.TestCase):
         report_name = self.set_report_name()
         # 打开report.html文件
         fp = open(report_name, "wb")
-        runner = HTMLTestRunner(fp, title="WEBUI自动化测试报告")
+        #执行用例
+        runner = HTMLTestRunner(fp, title="WEBUI自动化测试报告",
+                                description="环境：%s %s   浏览器：%s"%(plat,plat_ver,sys.argv[1]))
         result = runner.run(ts)
+        #关闭文件句柄
         fp.close()
 
 

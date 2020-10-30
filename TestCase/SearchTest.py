@@ -10,13 +10,23 @@ import os
 import sys
 
 class SearchTest(unittest.TestCase):
-    #每个用例执行前，打开search页面
-    def setUp(self):
-        self.sp = SearchPage()
+    #类前置条件，一个类只执行一次
+    @classmethod
+    def setUpClass(cls):
+        cls.sp = SearchPage()
         broswer_type = sys.argv[1]
         log.info("broswer_type=%s" % broswer_type)
-        self.sp.open_search_page(broswer_type)
-        self.driver = self.sp.driver
+        cls.sp.open_search_page(broswer_type)
+        cls.driver = cls.sp.driver
+
+    #每个用例执行前，打开search页面
+    def setUp(self):
+        # self.sp = SearchPage()
+        # broswer_type = sys.argv[1]
+        # log.info("broswer_type=%s" % broswer_type)
+        # self.sp.open_search_page(broswer_type)
+        # self.driver = self.sp.driver
+        pass
 
     #测试用例，搜索单个公司
     def test_search_one_company(self):
@@ -31,9 +41,17 @@ class SearchTest(unittest.TestCase):
         log.info("page_company_count=%s,db_company_count=%s"%(page_company_count,db_company_count))
         self.assertEqual(page_company_count,db_company_count)
 
+    # 类后置条件，一个类只执行一次
+    @classmethod
+    def tearDownClass(cls):
+        sleep(3)
+        #关闭浏览器
+        cls.sp.close_broswer()
+
     #用例执行后操作，关闭浏览器
     def tearDown(self):
-        self.sp.close_broswer()
+        # self.sp.close_broswer()
+        pass
 
 if __name__ == '__main__':
     # unittest.main()
