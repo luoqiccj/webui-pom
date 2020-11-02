@@ -175,7 +175,7 @@ class SendMail:
 
 
 if __name__ == '__main__':
-    # sm=SendMail()
+    sm=SendMail()
     pj_dir = get_project_dir()
     cur_date = get_cur_date()
     mail_dir = os.path.join(pj_dir,"Report",cur_date)
