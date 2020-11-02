@@ -14,6 +14,7 @@ from utils.get_info import log
 from  utils.get_info import get_project_dir
 from  utils.get_info import get_cur_date
 import glob
+from utils.get_config_data import GetConfigData
 # import utils.global_para as glo
 
 class SendMail:
@@ -62,6 +63,13 @@ class SendMail:
         self.mail_psw = cf.get_data("mail", "mail_psw")
         self.from_addr = cf.get_data("mail", "from_addr")
         self.to_addrs = cf.get_data("mail", "to_addrs")
+
+    #获取count
+    def get_count(self,option):
+        filename = os.path.join(get_project_dir(), "ConfigFile", "data.ini")
+        cf = GetConfigData(filename)
+        data = cf.get_data("count",option)
+        return data
 
     def send_mail_dir(self,mail_dir):
         #获取mail的配置信息
@@ -119,12 +127,33 @@ class SendMail:
                     att["Content-Disposition"] = 'attachment; filename="%s"'%send_file_name
                     message.attach(att)
 
+        context_start = "共测试%s个浏览器("%(len(broswer_type))
+        context_end = "\n具体测试结果见附件。"
+
         if len(broswer_type)==1:
-            context = "共测试%s个浏览器(%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0])
+            context1 = ")。\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个"%(broswer_type[0],self.get_count(broswer_type[0] + "_success_count"),
+                                                            self.get_count(broswer_type[0] + "_failure_count"),self.get_count(broswer_type[0] + "_error_count"))
+            context = context_start + broswer_type[0] + context1 + context_end
+
         elif len(broswer_type)==2:
-            context = "共测试%s个浏览器(%s,%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0],broswer_type[1])
+            context1 = ")。\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个。" % (
+            broswer_type[0], self.get_count(broswer_type[0] + "_success_count"),
+            self.get_count(broswer_type[0] + "_failure_count"), self.get_count(broswer_type[0] + "_error_count"))
+            context2 = "\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个" % (
+            broswer_type[1], self.get_count(broswer_type[1] + "_success_count"),
+            self.get_count(broswer_type[1] + "_failure_count"), self.get_count(broswer_type[1] + "_error_count"))
+            context = context_start + broswer_type[0]+","+broswer_type[1] +context1 + context2+ context_end
         elif len(broswer_type)==3:
-            context = "共测试%s个浏览器(%s,%s,%s)。\n具体测试结果见附件。" % (len(broswer_type),broswer_type[0],broswer_type[1],broswer_type[2])
+            context1 = ")。\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个。" % (
+                broswer_type[0], self.get_count(broswer_type[0] + "_success_count"),
+                self.get_count(broswer_type[0] + "_failure_count"), self.get_count(broswer_type[0] + "_error_count"))
+            context2 = "\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个" % (
+                broswer_type[1], self.get_count(broswer_type[1] + "_success_count"),
+                self.get_count(broswer_type[1] + "_failure_count"), self.get_count(broswer_type[1] + "_error_count"))
+            context3 = "\n%s：共执行-个用例。成功%s个，失败%s个，错误%s个" % (
+                broswer_type[2], self.get_count(broswer_type[2] + "_success_count"),
+                self.get_count(broswer_type[2] + "_failure_count"), self.get_count(broswer_type[2] + "_error_count"))
+            context = context_start + broswer_type[0] + "," + broswer_type[1]+"," + broswer_type[2] + context1 + context2 +context3 + context_end
         else:
             log.info("浏览器个数错误")
         message.attach(MIMEText(context))
