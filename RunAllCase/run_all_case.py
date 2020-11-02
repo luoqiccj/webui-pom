@@ -9,7 +9,10 @@ import unittest
 from utils.HTMLTestRunner import HTMLTestRunner
 from datetime import datetime
 from utils.get_info import log
+from utils.get_info import get_project_dir
 import platform
+from utils.global_para import GlobalParam
+from utils.get_config_data import GetConfigData
 
 class RunMain(unittest.TestCase):
     #获取所有测试用例
@@ -79,6 +82,7 @@ class RunMain(unittest.TestCase):
         plat = platform.system()
         plat_ver = platform.version()
         log.info("plat_ver = %s"%plat_ver)
+
         #根据参数 获取测试套件
         if run_case_type=='2':
             ts = self.get_case_suit()
@@ -93,11 +97,32 @@ class RunMain(unittest.TestCase):
         runner = HTMLTestRunner(fp, title="WEBUI自动化测试报告",
                                 description="环境：%s %s   浏览器：%s"%(plat,plat_ver,sys.argv[1]))
         result = runner.run(ts)
+
+        option = "%s_success_count" % sys.argv[1]
+        self.write_ini_file("count",option,result.success_count)
+
+        option = "%s_failure_count" % sys.argv[1]
+        self.write_ini_file("count", option, result.failure_count)
+
+        option = "%s_error_count" % sys.argv[1]
+        self.write_ini_file("count", option, result.error_count)
         #关闭文件句柄
         fp.close()
 
+    #写data.ini文件
+    def write_ini_file(self,section,option,value):
+        filename = os.path.join(get_project_dir(),"ConfigFile","data.ini")
+        cf = GetConfigData(filename)
+        #option = "%s_success_count" % sys.argv[1]
+        cf.add_setion(section)
+        cf.add_option(section,option, str(value))
+        cf.write_ini()
 
 if __name__ == '__main__':
+    gp = GlobalParam()
+    gp.set_value("ie","ie")
+    log.info(gp.get_value("ie"))
+
     if len(sys.argv) == 3:
         RunMain().run_main(sys.argv[2])
     elif len(sys.argv) == 2:
