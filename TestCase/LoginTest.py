@@ -14,36 +14,35 @@ excel.open_excel_file()
 
 @ddt
 class LoginTest(unittest.TestCase):
-    #类前置条件，一个类只执行一次
-    @classmethod
-    def setUpClass(cls):
-        broswer_type = sys.argv[1]
-        log.info("broswer_type=%s" % broswer_type)
-        cls.lp = LoginPage()
-        cls.lp.open_login_page(broswer_type)
+    # #类前置条件，一个类只执行一次
+    # @classmethod
+    # def setUpClass(cls):
+    #     broswer_type = sys.argv[1]
+    #     log.info("broswer_type=%s" % broswer_type)
+    #     cls.lp = LoginPage()
+    #     cls.lp.open_login_page(broswer_type)
 
 
     # 用例前置条件，每条用例都会执行
     def setUp(self):
-        # broswer_type = sys.argv[1]
-        # log.info("broswer_type=%s" % broswer_type)
-        # self.lp = LoginPage()
-        # self.lp.open_login_page(broswer_type)
-        pass
+        broswer_type = sys.argv[1]
+        log.info("broswer_type=%s" % broswer_type)
+        self.lp = LoginPage()
+        self.lp.open_login_page(broswer_type)
 
-    # 类后置条件，一个类只执行一次
-    @classmethod
-    def tearDownClass(cls):
-        sleep(3)
-        #关闭浏览器
-        cls.lp.close_broswer()
+    # # 类后置条件，一个类只执行一次
+    # @classmethod
+    # def tearDownClass(cls):
+    #     sleep(3)
+    #     #关闭浏览器
+    #     cls.lp.close_broswer()
 
     # 用例后置处理
     def tearDown(self):
-        # sleep(3)
-        # #关闭浏览器
-        # self.lp.close_broswer()
-        pass
+        sleep(3)
+        #关闭浏览器
+        self.lp.close_broswer()
+
 
     #数据驱动测试登录
     @data(("nbyh_admin", "123456"), ("nbyh_admin", "1234567"))
