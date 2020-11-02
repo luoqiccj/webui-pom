@@ -11,7 +11,6 @@ from datetime import datetime
 from utils.get_info import log
 from utils.get_info import get_project_dir
 import platform
-from utils.global_para import GlobalParam
 from utils.get_config_data import GetConfigData
 
 class RunMain(unittest.TestCase):
